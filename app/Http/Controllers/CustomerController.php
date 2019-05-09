@@ -9,6 +9,16 @@ use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
+    public function seach(Request $request){
+        $keyword = $request->keyword;
+        if(!isset($keyword)){
+            return redirect()->route('customers.index');
+        }else{
+            $customers = Customer::where('name','like','%'.$keyword.'%')->paginate(5);
+            $cities = City::all();
+            return view('customers.index', compact('customers','cities'));
+        }
+    }
     public function filterByCity(Request $request){
         $cities = City::all();
        $city_id = $request->city_id;
@@ -22,7 +32,7 @@ class CustomerController extends Controller
     {
         $cities = City::all();
 
-        $customers =Customer::all();
+        $customers = Customer::paginate(5)  ;
         return view('customers.index', compact('customers','cities'));
     }
 

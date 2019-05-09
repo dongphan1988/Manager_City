@@ -2,17 +2,20 @@
 @section('title','list customers')
 @section('namepage','List Customers')
 @section('content')
+
     <div class="col-12">
         <div class="row">
             <div class="col-12">
                 <h1>Danh Sách Khách Hàng</h1>
             </div>
+
             <p  href="" data-toggle="modal" data-target="#cityModal">
                 <button type="button" class="btn btn-outline-success" style="width: 300px">
                     Lọc khách hàng theo thành phố
                 </button>
             </p>
             <div class="col-12">
+
                 @if (Session::has('success'))
                     <p class="text-success">
                         <i class="fa fa-check" aria-hidden="true"></i>
@@ -32,6 +35,37 @@
                        {{ 'Thuộc tỉnh' . ' ' . $cityFilter->name }}</span>
                     </div>
                 @endif
+            </div>
+            {{ $customers->links() }}
+
+            <div class="col-6">
+
+                <form method="get" class="navbar-form navbar-left" action="{{route('customers.seach')}}">
+
+                    @csrf
+
+                    <div class="row">
+
+                        <div class="col-8">
+
+                            <div class="form-group">
+
+                                <input type="text" name="keyword" class="form-control" placeholder="Search">
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-4">
+
+                            <button type="submit" class="btn btn-default">Tìm kiếm</button>
+
+                        </div>
+
+                    </div>
+
+                </form>
+
             </div>
             <table class="table table-striped">
                 <thead>
@@ -60,7 +94,7 @@
                             <td>{{ $customer->email }}</td>
                             <td>{{ $customer->city->name }}</td>
                             <td>
-                                <img src="{{asset('storage/'.$customer->image)}}" style="width: 150px"/>
+                                <img src="{{asset('storage/'.$customer->image)}}" style="width: 40px"/>
                             </td>
                             <td><a href="{{ route('customers.edit', $customer->id) }}">
                                     <button type="button" class="btn btn-outline-secondary">Sửa</button>
@@ -74,7 +108,8 @@
                 @endif
                 </tbody>
             </table>
-            <a class="btn btn-primary" href="{{ route('customers.create') }}">Thêm mới</a>
+            <div style="text-align: right">{{ $customers->links() }} </div>
+
         </div>
 
         <!-- Modal -->

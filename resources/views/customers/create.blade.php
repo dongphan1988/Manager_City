@@ -42,6 +42,9 @@
                     </div>
                     <div>
                         <button type="submit" class="btn-outline-success">ADD CUSTOMER</button>
+                        <a href="{{route('customers.index')}}">
+                        <button type="button" class="btn-outline-primary">BACK HOME</button>
+                        </a>
                     </div>
                 </form>
 {{--@if(isset($errors))--}}
